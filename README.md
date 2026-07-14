@@ -121,15 +121,15 @@ To simulate:
 
 ```bash
 cd scripts
-./tx.sh
+./scripts/tx.sh
 ```
 
 Similarly,
 
 ```bash
-./baud_gen.sh
-./rx.sh
-./uart.sh
+./scripts/baud_gen.sh
+./scripts/rx.sh
+./scripts/uart.sh
 ```
 
 Waveforms are generated in the `sim/` directory and can be viewed using GTKWave.
