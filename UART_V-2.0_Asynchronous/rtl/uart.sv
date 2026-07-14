@@ -10,22 +10,35 @@ module uart(
     output wire rx_done,
     output wire [7:0] rx_data
 );
-wire baud_tick;
+
+wire tx_baud_tick;
+wire rx_baud_tick;
 wire tx;
 
 baud_gen #(
     .CLK_FREQ(50_000_000),
-    .BAUD_RATE(115200)
+    .BAUD_RATE(115200),
+    .OVERSAMPLE(1)
 ) UUT1 (
     .clk(clk),
     .rst(rst),
-    .baud_tick(baud_tick)
+    .baud_tick(tx_baud_tick)
 );
 
-tx UUT2 (
+baud_gen #(
+    .CLK_FREQ(50_000_000),
+    .BAUD_RATE(115200),
+    .OVERSAMPLE(16)
+) UUT2 (
     .clk(clk),
     .rst(rst),
-    .baud_tick(baud_tick),
+    .baud_tick(rx_baud_tick)
+);
+
+tx UUT3 (
+    .clk(clk),
+    .rst(rst),
+    .baud_tick(tx_baud_tick),
     .tx_start(tx_start),
     .tx_data(tx_data),
     .tx(tx),
@@ -33,10 +46,10 @@ tx UUT2 (
     .busy(busy)
 );
 
-rx UUT3 (
+rx UUT4 (
     .clk(clk),
     .rst(rst),
-    .baud_tick(baud_tick),
+    .baud_tick(rx_baud_tick),
     .rx(tx),
     .rx_done(rx_done),
     .rx_data(rx_data)

@@ -5,7 +5,8 @@
 `timescale 1ns/1ps
 module baud_gen #(
     parameter CLK_FREQ = 50_000_000,
-    parameter BAUD_RATE = 115200
+    parameter BAUD_RATE = 115200,
+    parameter OVERSAMPLE = 1
 )
 (
     input wire clk,
@@ -14,7 +15,7 @@ module baud_gen #(
 );
 
 //creating a counter to count upto DIV 
-localparam integer DIV = CLK_FREQ/BAUD_RATE;
+localparam integer DIV = CLK_FREQ/(OVERSAMPLE * BAUD_RATE);
 reg [$clog2(DIV)-1:0] counter;
 
 always @(posedge clk or posedge rst) begin

@@ -25,7 +25,7 @@ always #10 clk_tb = ~clk_tb;
 
 initial begin
     $dumpfile("sim/uart/uart.vcd");
-    $dumpvars(0, uart_tb);
+    $dumpvars(0, DUT);
         
         // Initialize
     clk_tb = 1'b0;
@@ -46,6 +46,7 @@ initial begin
     tx_start_tb = 1'b0; // Clear start trigger
         // Wait for system to finish loopback completely automatically
     @(posedge rx_done_tb);
+    @(negedge busy_tb);
     #100;
         
         // Transmit second byte
@@ -55,6 +56,7 @@ initial begin
     @(posedge clk_tb);
     tx_start_tb = 1'b0;
     @(posedge rx_done_tb);
+    @(negedge busy_tb);
 
     #100;
 
@@ -64,6 +66,7 @@ initial begin
     @(posedge clk_tb);
     tx_start_tb = 1'b0;
     @(posedge rx_done_tb);
+    @(negedge busy_tb);
 
     #100
 
@@ -73,6 +76,7 @@ initial begin
     @(posedge clk_tb);
     tx_start_tb = 1'b0;
     @(posedge rx_done_tb);
+    @(negedge busy_tb);
 
     #100;
 
@@ -86,4 +90,3 @@ initial begin
     end
 
 endmodule
-

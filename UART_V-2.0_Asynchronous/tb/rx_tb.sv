@@ -9,7 +9,8 @@ wire [7:0] rx_data_tb;
 
 baud_gen #(
     .CLK_FREQ(50_000_000),
-    .BAUD_RATE(115200)
+    .BAUD_RATE(115200),
+    .OVERSAMPLE(16)
 ) UUT1 (
     .clk(clk_tb),
     .rst(rst_tb),
@@ -57,6 +58,15 @@ initial begin
     send_byte(8'h71);
     send_byte(8'h47);
     $finish;
+end
+always @(posedge clk_tb) begin
+    $display("time=%0t rx=%b state=%d sample=%d bit=%d",
+    $time,
+    rx_tb,
+    UUT2.current_state,
+    UUT2.sample_count,
+    UUT2.bit_index
+    );
 end
 always @(posedge rx_done_tb) begin
     $display("Received data = %h", rx_data_tb);
