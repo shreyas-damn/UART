@@ -60,14 +60,36 @@ initial begin
 
     //BYTE 2
     @(posedge clk_tb);
-        tx_data_tb = 8'h3C;
+        tx_data_tb = 8'h3B;
         tx_start_tb = 1'b1;
     //sets tx_start back to low
     @(posedge clk_tb);
         tx_start_tb = 1'b0;
     //when tx_done gives high output, we 
     @(posedge tx_done_tb);
-        $display("3C successfully transmitted");
+        $display("3B successfully transmitted");
+
+    @(posedge clk_tb);
+        tx_data_tb = 8'h42;
+        tx_start_tb = 1'b1;
+    //sets tx_start back to low
+    @(posedge clk_tb);
+        tx_start_tb = 1'b0;
+    //when tx_done gives high output, we 
+    @(posedge tx_done_tb);
+        $display("42 successfully transmitted");
+
+
+    @(posedge clk_tb);
+        tx_data_tb = 8'h33;
+        tx_start_tb = 1'b1;
+    //sets tx_start back to low
+    @(posedge clk_tb);
+        tx_start_tb = 1'b0;
+    //when tx_done gives high output, we 
+    @(posedge tx_done_tb);
+        $display("33 successfully transmitted");
+    
     $finish;
 end
 endmodule

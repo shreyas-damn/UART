@@ -53,10 +53,10 @@ initial begin
     #100;
     rst_tb = 1'b0;
     #200;
-    send_byte(8'hcc);
-    send_byte(8'h3c);
-    send_byte(8'h71);
-    send_byte(8'h47);
+    send_byte(8'hA5);
+    send_byte(8'h3B);
+    send_byte(8'h42);
+    send_byte(8'h33);
     $finish;
 end
 always @(posedge clk_tb) begin
